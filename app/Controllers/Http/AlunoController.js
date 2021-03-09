@@ -17,8 +17,8 @@ class AlunoController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index ({}) {
-    const alunos = await Aluno.all();
+  async index() {
+    const alunos = await Aluno.query().with(["curso"]).fetch();
     return alunos;
   }
 
