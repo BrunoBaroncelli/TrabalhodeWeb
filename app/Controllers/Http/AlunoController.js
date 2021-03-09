@@ -46,8 +46,10 @@ class AlunoController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show ({ params, request, response, view }) {
-    const aluno = await Aluno.findOrFail(params.id)
+  async show({ params, request, response, view }) {
+    // const aluno = await Aluno.findOrFail(params.id);
+    // return aluno;
+    const aluno = await Aluno.query().where("curso_id", params.id).fetch();
     return aluno;
   }
 
@@ -59,9 +61,13 @@ class AlunoController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async update ({ params, request, response }) {
+  async update({ params, request, response }) {
     const aluno = await Aluno.findOrFail(params.id);
-    const {nome, curso_id, descricao} = reuqest.only(['nome','curso_id','descricao']);
+    const { nome, curso_id, descricao } = request.only([
+      "nome",
+      "curso_id",
+      "descricao",
+    ]);
     aluno.nome = nome;
     aluno.curso_id = curso_id;
     aluno.descricao = descricao;
