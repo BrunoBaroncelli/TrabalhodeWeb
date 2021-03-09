@@ -30,8 +30,9 @@ class AlunoController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async store ({ request }) {
-    const data = reuqest.only(['nome','curso_id','descricao']);
+  async store({ request, auth }) {
+    const data = request.only(["curso_id", "nome", "descricao"]);
+    console.log(auth.user.id);
     const aluno = await Aluno.create(data);
     return aluno;
   }
